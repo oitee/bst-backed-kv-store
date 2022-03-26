@@ -4,7 +4,8 @@
   "description": "A Balanced Binary Search Tree backed hashtable",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage=true -i"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage=true -i",
+    "start": "node src/launcher.js"
   },
   "repository": {
     "type": "git",

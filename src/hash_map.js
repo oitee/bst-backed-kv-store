@@ -1,11 +1,11 @@
 import * as bst from "./bst.js";
-
+import * as utils from "./utils.js";
 export class HashMap {
   constructor(m, loadFactor) {
     this.arr = [];
-    if (this.isPositiveNumber(m)) this.size = m;
+    if (utils.isPositiveNumber(m)) this.size = m;
     else this.size = 100;
-    if (this.isPositiveNumber(loadFactor)) this.loadFactor = loadFactor;
+    if (utils.isPositiveNumber(loadFactor)) this.loadFactor = loadFactor;
     else this.loadFactor = 0.75;
     this.addDefaultValues();
     this.filledHashBuckets = 0;
@@ -35,7 +35,7 @@ export class HashMap {
    */
   insert(key, value) {
     let hashValue = this.hashFn(key);
-    if (!this.isPositiveNumber(key)) {
+    if (!utils.isPositiveNumber(key)) {
       throw `Keys need to be of positive Numbers: ${key}`;
     }
     if (this.arr[hashValue] == null) {
@@ -53,6 +53,9 @@ export class HashMap {
    * @returns String | Null
    */
   get(key) {
+    if (!utils.isPositiveNumber(key)) {
+      throw `Keys need to be of positive Numbers: ${key}`;
+    }
     let hashValue = this.hashFn(key);
     if (this.arr[hashValue] === null) {
       return null;
@@ -124,14 +127,5 @@ export class HashMap {
     });
 
     return resultStr;
-  }
-
-  /**
-   * Checks if a given key is an Number or not
-   * @param {Any} key
-   * @returns Boolean
-   */
-  isPositiveNumber(key) {
-    return typeof key == "number" && key >= 0;
   }
 }
