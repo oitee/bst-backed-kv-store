@@ -22,14 +22,12 @@ function testAscendingOrderInsertion() {
   store.insert(5, "5");
   store.insert(5, "5");
 
-  assert.equal(store.isBalanced(), true);
   assert.equal(store.get(0), "zero");
   assert.equal(store.get(1), "one");
   assert.equal(store.get(5), "5");
   assert.equal(store.get(99), null);
 
   kvPairs.forEach((pair) => store.insert(pair[0], pair[1]));
-  assert.equal(store.isBalanced(), true);
   assertIfAllPresent(store, kvPairs);
   
   //asserting in-order traversal
@@ -44,14 +42,12 @@ function testDescendingOrderInsertion() {
   store.insert(5, "5");
   store.insert(5, "5");
 
-  assert.equal(store.isBalanced(), true);
   assert.equal(store.get(0), "zero");
   assert.equal(store.get(1), "one");
   assert.equal(store.get(5), "5");
   assert.equal(store.get(99), null);
 
   kvPairs.forEach((pair) => store.insert(pair[0], pair[1]));
-  assert.equal(store.isBalanced(), true);
   assertIfAllPresent(store, kvPairs);
 }
 
@@ -63,14 +59,12 @@ function testRandomOrderInsertion() {
   store.insert(5, "5");
   store.insert(5, "5");
 
-  assert.equal(store.isBalanced(), true);
   assert.equal(store.get(0), "zero");
   assert.equal(store.get(1), "one");
   assert.equal(store.get(5), "5");
   assert.equal(store.get(99), null);
 
   kvPairs.forEach((pair) => store.insert(pair[0], pair[1]));
-  assert.equal(store.isBalanced(), true);
   assertIfAllPresent(store, kvPairs);
 }
 
