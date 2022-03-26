@@ -29,7 +29,9 @@ export class BinaryTree {
    * @param {Node} node
    */
   updateHeight(node) {
-    if (node) node.height = Math.max(this.findHeight(node.right), this.findHeight(node.left)) + 1;
+    if (node)
+      node.height =
+        Math.max(this.findHeight(node.right), this.findHeight(node.left)) + 1;
   }
 
   /**
@@ -64,7 +66,9 @@ export class BinaryTree {
       else {
         //condition to check if the height of the left sub-tree of the left child node
         // is greater than or equal to the height of the right sub-tree of the right child node
-        if (this.findHeight(node.left.left) >= this.findHeight(node.left.right)) {
+        if (
+          this.findHeight(node.left.left) >= this.findHeight(node.left.right)
+        ) {
           rightRotate(node);
         }
         //when the height of the right subtree of the left child node is greater than the
@@ -146,8 +150,7 @@ export class BinaryTree {
   insert(key, value, node = this.root) {
     if (key === node.key) {
       node.value = value;
-    }
-    else if (key < node.key) {
+    } else if (key < node.key) {
       if (node.left) {
         this.insert(key, value, node.left);
       } else {
@@ -188,33 +191,59 @@ export class BinaryTree {
   }
 
   /**
-   * Returns an array of all the key-value pairs in the BST
+   * Returns a two-dimensional array, containing all the key-value pairs of the BST
    * @param {Node} node
    * @returns Array
    */
-  getAllKeyValuePairs(node = this.root) {
+  getAllKeyValuePairsInArr(node = this.root) {
+    let result = [];
+    if (node === null) {
+      return null;
+    }
+
+    let leftSubTree = this.getAllKeyValuePairsInArr(node.left);
+    if (leftSubTree) {
+      leftSubTree.forEach((pair) => result.push(pair));
+    }
+    result.push([node.key, node.value]);
+
+    let rightSubTree = this.getAllKeyValuePairsInArr(node.right);
+    if (rightSubTree) {
+      rightSubTree.forEach((pair) => result.push(pair));
+    }
+
+    return result;
+  }
+  /**
+   * Returns a String representing all the key-value pairs in the BST
+   * @param {Node} node
+   * @returns String
+   */
+  getAllKeyValuePairsInStr(node = this.root) {
     let result = "";
     if (node === null) {
       return null;
     }
 
-    let leftSubTree = this.getAllKeyValuePairs(node.left);
+    let leftSubTree = this.getAllKeyValuePairsInStr(node.left);
     if (leftSubTree) {
       result += leftSubTree;
     }
-    result +=
-    `< ${node.key}, ${node.value}>
+    result += `< ${node.key}, ${node.value}>
 `;
 
-    let rightSubTree = this.getAllKeyValuePairs(node.right);
+    let rightSubTree = this.getAllKeyValuePairsInStr(node.right);
     if (rightSubTree) {
       result += rightSubTree;
     }
 
     return result;
   }
+
   isBalanced(node = this.root) {
-    return Math.abs(this.findHeight(node.left) - this.findHeight(node.right)) < 2;
+    return (
+      Math.abs(this.findHeight(node.left) - this.findHeight(node.right)) < 2
+    );
   }
 }
 

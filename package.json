@@ -24,7 +24,7 @@
     "testMatch": [
       "**/test/**/**.js"
     ],
-    "modulePathIgnorePatterns": [],
+    "modulePathIgnorePatterns": ["<rootDir>/test/test_utils"],
     "setupFilesAfterEnv": []
   }
 }
