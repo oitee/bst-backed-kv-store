@@ -1,7 +1,7 @@
 {
   "name": "bst-backed-kv-store",
   "version": "1.0.0",
-  "description": "A Balanced Binary Search Tree backed hashtable",
+  "description": "A Binary Search Tree backed hashtable",
   "main": "index.js",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage=true -i",

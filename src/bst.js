@@ -52,8 +52,8 @@ export class BinaryTree {
       if (this.findHeight(node.right) > this.findHeight(node.left)) {
         //condition to check if the height of the right-subtree of the right child node is
         // greater than or equal to the height of the left sub-tree of the right child node
-        if (this.findHeight(node.right.right) >= height(node.right.left)) {
-          leftRotate(node);
+        if (this.findHeight(node.right.right) >= this.findHeight(node.right.left)) {
+          this.leftRotate(node);
         }
         //when the left sub-tree of the right child node is greater than the right sub-tree of
         //the right child node
@@ -69,7 +69,7 @@ export class BinaryTree {
         if (
           this.findHeight(node.left.left) >= this.findHeight(node.left.right)
         ) {
-          rightRotate(node);
+          this.rightRotate(node);
         }
         //when the height of the right subtree of the left child node is greater than the
         // height of the right sub-tree of the left child node
@@ -78,9 +78,8 @@ export class BinaryTree {
           this.rightRotate(node);
         }
       }
-
-      this.rebalance(node.parent);
     }
+    this.rebalance(node.parent);
   }
 
   /**
@@ -88,54 +87,50 @@ export class BinaryTree {
    * @param {Node} x
    */
   leftRotate(x) {
-    const xParent = x.parent;
-    const y = x.right;
-    const yL = y.left;
-
-    y.left = x;
-    x.right = yL;
-
-    // update parent nodes
-    x.parent = y;
-    if (xParent === null) {
+    let y = x.right;
+    y.parent = x.parent;
+    if (y.parent == null) {
       this.root = y;
-    } else if (xParent.left === x) {
-      xParent.left = y;
     } else {
-      xParent.right = x;
+      if (y.parent.left == x) {
+        y.parent.left = y;
+      } else if (y.parent.right == x) {
+        y.parent.right = y;
+      }
     }
-    if (yL) yL.parent = x;
 
-    //update the heights of the changed nodes: x and y & y's parent
+    x.right = y.left;
+    if (x.right !== null) {
+      x.right.parent = x;
+    }
+    y.left = x;
+    x.parent = y;
     this.updateHeight(x);
     this.updateHeight(y);
-    this.updateHeight(xParent);
   }
 
   rightRotate(x) {
-    const xParent = x.parent;
-    const y = x.left;
-    const yR = y.right;
-
-    y.right = x;
-    x.left = yR;
-
-    //update parent nodes
-    x.parent = y;
-    if (xParent == null) {
+    let y = x.left;
+    y.parent = x.parent;
+    if (y.parent == null) {
       this.root = y;
-    } else if (xParent.left == x) {
-      xParent.left = y;
     } else {
-      xParent.right = y;
+      if (y.parent.left == x) {
+        y.parent.left = y;
+      } else if (y.parent.right == x) {
+        y.parent.right = y;
+      }
     }
 
-    if (yR) yR.parent = x;
+    x.left = y.right;
+    if (x.left !== null) {
+      x.left.parent = x;
+    }
 
-    //update heights of the changed nodes: x and y & y's parent
+    y.right = x;
+    x.parent = y;
     this.updateHeight(x);
     this.updateHeight(y);
-    this.updateHeight(xParent);
   }
   /**
    * Inserts a new key-value pair in the BST and then calls `this.rebalance`
