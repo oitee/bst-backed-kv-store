@@ -1,9 +1,9 @@
 import * as bst from "./bst.js";
 import * as utils from "./utils.js";
 export class HashMap {
-  constructor(m, loadFactor) {
+  constructor(loadFactor, maxSize) {
     this.arr = [];
-    if (utils.isPositiveNumber(m)) this.size = m;
+    if (utils.isPositiveNumber(maxSize)) this.size = maxSize;
     else this.size = 100;
     if (utils.isPositiveNumber(loadFactor)) this.loadFactor = loadFactor;
     else this.loadFactor = 0.75;
@@ -34,7 +34,7 @@ export class HashMap {
    * @param {String} value
    */
   insert(key, value) {
-    let hashValue = this.hashFn(key);
+    const hashValue = this.hashFn(key);
     if (!utils.isPositiveNumber(key)) {
       throw `Keys need to be of positive Numbers: ${key}`;
     }
@@ -56,7 +56,7 @@ export class HashMap {
     if (!utils.isPositiveNumber(key)) {
       throw `Keys need to be of positive Numbers: ${key}`;
     }
-    let hashValue = this.hashFn(key);
+    const hashValue = this.hashFn(key);
     if (this.arr[hashValue] === null) {
       return null;
     }
@@ -85,11 +85,11 @@ export class HashMap {
    * followed by mapping of the exisitng key-value pairs to the new hashMap
    */
   rehash() {
-    let newHashMap = new HashMap(this.size * 2, this.loadFactor);
+    const newHashMap = new HashMap(this.size * 2, this.loadFactor);
     this.arr.forEach((hashBucket) => {
       if (hashBucket !== null) {
         hashBucket
-          .getAllKeyValuePairsInArr()
+          .getAllPairs()
           .forEach((pair) => newHashMap.insert(pair[0], pair[1]));
       }
     });
@@ -102,30 +102,32 @@ export class HashMap {
    * Returns an array containing all the key-value pairs in the hashMap
    * @returns Array
    */
-  getAllKeyValuePairsInArr() {
+  getAllArr() {
     return this.arr
-      .map((hashBucket) => {
-        if (hashBucket == null) {
-          return null;
-        }
-        return hashBucket.getAllKeyValuePairsInArr();
-      })
-      .filter((item) => item)
-      .flatMap((item) => item);
+    .filter(item => item !== null)
+    .flatMap((hashBucket) => hashBucket.getAllPairs())
   }
 
   /**
-   * Returns a string representing all the key-value pairs present in the hashMap
+   * Returns a string representation of a given array of key-value pairs
    * @returns String
    */
-  getAllKeyValuePairsInStr() {
-    let allPairs = this.getAllKeyValuePairsInArr();
+  stringifyPairs(pairs) {
     let resultStr = "";
-    allPairs.forEach((pair) => {
+    pairs.forEach((pair) => {
       resultStr += `< ${pair[0]}, ${pair[1]} >
 `;
     });
 
     return resultStr;
+  }
+
+  /**
+   * Returns a String representation of all the key-value pairs present in the hashMap
+   * @returns String
+   */
+  getAll() {
+    const allPairsArr = this.getAllArr();
+    return this.stringifyPairs(allPairsArr);
   }
 }

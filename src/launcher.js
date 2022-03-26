@@ -19,6 +19,7 @@ async function repl(store) {
 `);
 
   rl.question(`Choice (q to exit): `, async (input) => {
+    input = input.trim()
     if (input === "q") {
         console.log("Bye!")
       rl.close();
@@ -44,8 +45,10 @@ async function repl(store) {
 async function insert(store) {
 
   rl.question(`Enter key: `, async (inputKey) => {
+      inputKey = inputKey.trim()
     if (utils.isPositiveNumber(parseInt(inputKey))) {
       rl.question(`Enter value:`, async (inputValue) => {
+          inputValue = inputValue.trim()
         if (utils.isString(inputValue)) {
           store.insert(parseInt(inputKey), inputValue);
           console.log(`Insertion successful`);
@@ -75,6 +78,7 @@ async function insert(store) {
 async function get(store) {
 
   rl.question(`Enter key: `, async (inputKey) => {
+      inputKey = inputKey.trim()
     if (utils.isPositiveNumber(parseInt(inputKey))) {
       console.log(`Retrieved Value: ${store.get(parseInt(inputKey))}`);
     } else {
@@ -94,11 +98,10 @@ async function get(store) {
  * @param {hashMap.HashMap} store 
  */
 async function getAll(store) {
-  console.log(store.getAllKeyValuePairsInStr())
+  console.log(store.getAll())
   console.log();
     console.log(`-----------------------------------------`);
     await repl(store);
-
 }
 
 /**

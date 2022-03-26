@@ -88,13 +88,9 @@ export class BinaryTree {
    * @param {Node} x
    */
   leftRotate(x) {
-    let xParent = x.parent;
-    let y = x.right;
-
-    // let yR = y.right;
-    let yL = y.left;
-    // let xR = x.right;
-    // let xL = x.left;
+    const xParent = x.parent;
+    const y = x.right;
+    const yL = y.left;
 
     y.left = x;
     x.right = yL;
@@ -117,9 +113,9 @@ export class BinaryTree {
   }
 
   rightRotate(x) {
-    let xParent = x.parent;
-    let y = x.left;
-    let yR = y.right;
+    const xParent = x.parent;
+    const y = x.left;
+    const yR = y.right;
 
     y.right = x;
     x.left = yR;
@@ -154,7 +150,7 @@ export class BinaryTree {
       if (node.left) {
         this.insert(key, value, node.left);
       } else {
-        let newNode = new Node(key, value);
+        const newNode = new Node(key, value);
         node.left = newNode;
         newNode.parent = node;
         this.rebalance(newNode);
@@ -163,7 +159,7 @@ export class BinaryTree {
       if (node.right) {
         this.insert(key, value, node.right);
       } else {
-        let newNode = new Node(key, value);
+        const newNode = new Node(key, value);
         node.right = newNode;
         newNode.parent = node;
         this.rebalance(newNode);
@@ -195,19 +191,19 @@ export class BinaryTree {
    * @param {Node} node
    * @returns Array
    */
-  getAllKeyValuePairsInArr(node = this.root) {
-    let result = [];
+  getAllPairs(node = this.root) {
+    const result = [];
     if (node === null) {
       return null;
     }
 
-    let leftSubTree = this.getAllKeyValuePairsInArr(node.left);
+    const leftSubTree = this.getAllPairs(node.left);
     if (leftSubTree) {
       leftSubTree.forEach((pair) => result.push(pair));
     }
     result.push([node.key, node.value]);
 
-    let rightSubTree = this.getAllKeyValuePairsInArr(node.right);
+    const rightSubTree = this.getAllPairs(node.right);
     if (rightSubTree) {
       rightSubTree.forEach((pair) => result.push(pair));
     }
@@ -225,14 +221,14 @@ export class BinaryTree {
       return null;
     }
 
-    let leftSubTree = this.getAllKeyValuePairsInStr(node.left);
+    const leftSubTree = this.getAllKeyValuePairsInStr(node.left);
     if (leftSubTree) {
       result += leftSubTree;
     }
     result += `< ${node.key}, ${node.value}>
 `;
 
-    let rightSubTree = this.getAllKeyValuePairsInStr(node.right);
+    const rightSubTree = this.getAllKeyValuePairsInStr(node.right);
     if (rightSubTree) {
       result += rightSubTree;
     }

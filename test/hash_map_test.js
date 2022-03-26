@@ -68,7 +68,7 @@ function testRandomOrderInsertion() {
 }
 
 function assertIfAllPresent(store, pairs) {
-  let allPairsFromStoreStr = store.getAllKeyValuePairsInStr();
+  let allPairsFromStoreStr = store.getAll();
 
   pairs.forEach((pair) => {
     let inputPair = `< ${pair[0]}, ${pair[1]} >`;
@@ -77,7 +77,7 @@ function assertIfAllPresent(store, pairs) {
 
   pairs.sort((arr1, arr2) => arr1[0] - arr2[0]);
   let allPairsFromStoreArr = store
-    .getAllKeyValuePairsInArr()
+    .getAllArr()
     .sort((arr1, arr2) => arr1[0] - arr2[1]);
   assert.deepEqual(pairs, allPairsFromStoreArr);
 }
