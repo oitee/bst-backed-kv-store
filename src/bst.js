@@ -87,6 +87,7 @@ export class BinaryTree {
    * @param {Node} x
    */
   leftRotate(x) {
+    
     let y = x.right;
     y.parent = x.parent;
     if (y.parent == null) {
